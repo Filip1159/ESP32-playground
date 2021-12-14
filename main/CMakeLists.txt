@@ -1,0 +1,1 @@
+idf_component_register(SRCS "inc/main.h" "main.cpp" "inc/HD44780.h" "HD44780.cpp" INCLUDE_DIRS ".")

@@ -1,0 +1,10 @@
+{
+  "C_Cpp.intelliSenseEngine": "Tag Parser",
+  "idf.flashBaudRate": "912600",
+  "idf.notificationSilentMode": true,
+  "idf.portWin": "COM3",
+  "files.associations": {
+    "*.tcc": "c",
+    "*.ipp": "c"
+  }
+}
