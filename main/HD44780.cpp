@@ -3,6 +3,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "string.h"
+#include "driver/ledc.h"
 
 void HD44780::writeUpper(uint8_t command) {
 	gpio_set_level(d4Pin, (command >> 4) & 1);
@@ -18,12 +19,33 @@ void HD44780::writeLower(uint8_t command) {
 	gpio_set_level(d7Pin, (command >> 3) & 1);
 }
 
-HD44780::HD44780(gpio_num_t rsPin, gpio_num_t ePin, gpio_num_t d4Pin, gpio_num_t d5Pin, gpio_num_t d6Pin, gpio_num_t d7Pin) : rsPin(rsPin), ePin(ePin), d4Pin(d4Pin), d5Pin(d5Pin), d6Pin(d6Pin), d7Pin(d7Pin) {
+HD44780::HD44780(gpio_num_t rsPin, gpio_num_t ePin, gpio_num_t d4Pin, gpio_num_t d5Pin, gpio_num_t d6Pin, gpio_num_t d7Pin, gpio_num_t v0Pin)
+		: rsPin(rsPin), ePin(ePin), d4Pin(d4Pin), d5Pin(d5Pin), d6Pin(d6Pin), d7Pin(d7Pin), v0Pin(v0Pin) {
 	gpio_config_t config;
     memset(&config, 0, sizeof(gpio_config_t));
     config.mode = GPIO_MODE_OUTPUT;
     config.pin_bit_mask = (1ULL << rsPin) | (1ULL << ePin) | (1ULL << d4Pin) | (1ULL << d5Pin) | (1ULL << d6Pin) | (1ULL << d7Pin);
     gpio_config(&config);
+
+	ledc_timer_config_t ledc_timer = {
+        /* .speed_mode */   LEDC_LOW_SPEED_MODE,
+	    /* .duty_resolution */  LEDC_TIMER_10_BIT,
+        /* .timer_num */    LEDC_TIMER_0,
+        /* .freq_hz */      1000,
+        /* .clk_cfg */     LEDC_AUTO_CLK
+    };
+    ledc_timer_config(&ledc_timer);
+
+    ledc_channel_config_t ledc_channel = {
+		/* .gpio_num */       v0Pin,
+        /* .speed_mode */     LEDC_LOW_SPEED_MODE,
+        /* .channel */        LEDC_CHANNEL_0,
+		/* .intr_type */      LEDC_INTR_DISABLE,
+        /* .timer_sel */      LEDC_TIMER_0,
+        /* .duty */           511,
+        /* .hpoint */         0
+    };
+    ledc_channel_config(&ledc_channel);
 
 	vTaskDelay(pdMS_TO_TICKS(20));  // always >15ms
 
