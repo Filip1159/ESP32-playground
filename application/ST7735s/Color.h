@@ -1,0 +1,13 @@
+#pragma once
+
+enum Color {
+	Black = 0x0000,
+	Blue = 0x001F,
+	Red = 0xF800,
+	Green = 0x0400,
+	Lime = 0x07E0,
+	Cyan = 0x07FF,
+	Magenta = 0xF81F,
+	Yellow = 0xFFE0,
+	White = 0xFFFF
+};

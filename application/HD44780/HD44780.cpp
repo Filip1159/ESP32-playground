@@ -1,5 +1,5 @@
-#include "inc/HD44780.h"
-#include "inc/main.h"
+#include "HD44780.h"
+//#include "main.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "string.h"

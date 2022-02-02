@@ -6,5 +6,6 @@
   "files.associations": {
     "*.tcc": "c",
     "*.ipp": "c"
-  }
+  },
+  "idf.adapterTargetName": "esp32"
 }

@@ -6,6 +6,9 @@
             "type": "shell",
             "command": "${config:idf.pythonBinPath} ${config:idf.espIdfPath}/tools/idf.py build",
             "windows": {
+                "args": [
+                    "-fexceptions"
+                ],
                 "command": "${config:idf.pythonBinPathWin} ${config:idf.espIdfPathWin}\\tools\\idf.py build",
                 "options": {
                     "env": {
