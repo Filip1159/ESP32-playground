@@ -1,3 +1,3 @@
-set(SOURCES Pixel.cpp)
+set(SOURCES Canvas.cpp Printer.cpp)
 
-idf_component_register(SRCS ${SOURCES} INCLUDE_DIRS .)
+idf_component_register(SRCS ${SOURCES} INCLUDE_DIRS . REQUIRES ST7735s Color)
