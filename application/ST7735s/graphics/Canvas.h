@@ -19,6 +19,7 @@ private:
 public:
     Canvas(ST7735s* display) : display(display) {}
 
+    void drawBitmap(const uint8_t bitmap[], uint8_t width, uint8_t height);
     void fillEllipse(int xCenter,int yCenter, int width, int height, Color color);
     void drawEllipse(int xCenter, int yCenter, int width, int height, Color color);
     void fillCircle(uint8_t xCenter, uint8_t yCenter, uint8_t r, Color color);

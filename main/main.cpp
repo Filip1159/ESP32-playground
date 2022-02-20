@@ -12,6 +12,8 @@
 #include "Canvas.h"
 #include "Printer.h"
 
+#include "mario_128x160.h"
+
 extern "C" void app_main(void) {
     HD44780 textDisplay(RS_Pin, E_Pin, D4_Pin, D5_Pin, D6_Pin, D7_Pin, V0_Pin);
 
@@ -28,6 +30,7 @@ extern "C" void app_main(void) {
         printer.setLine(5);
         printer.setFontSize(Big);
         printer.writeString("Big Hello", Magenta);
+        canvas.drawBitmap(mario_128x160_map, 128, 160);
         
     } catch (std::exception& e) {
         printf("exception\n");

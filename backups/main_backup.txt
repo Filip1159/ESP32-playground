@@ -66,46 +66,15 @@ extern "C" void app_main(void) {
     esp_wifi_init(&cfg);
     esp_wifi_set_storage(WIFI_STORAGE_RAM);
     esp_wifi_set_mode(WIFI_MODE_STA);
-    // wifi_config_t sta_config = {
-    //     .sta = {
-    //         .ssid = "HUAWEI-B315-5592",
-    //         .password = "Y0A5LFB6B5D",
-    //         .bssid_set = 0
-    //     }
-    // };
-    wifi_config_t sta_config = {
-        .sta =  {
-        /* ssid            */ "HUAWEI-B315-5592",
-        /* password        */ "Y0A5LFB6B5D",
-        /* scan_method     */ {},
-        /* bssid_set       */ 0,
-        /* bssid           */ {},
-        /* channel         */ {},
-        /* listen_interval */ {},
-        /* sort_method     */ {},
-        /* threshold       */ {
-            /* rssi            */ {},
-            /* authmode        */ WIFI_AUTH_WPA2_PSK},
-        /* pmf_cfg         */ {
-            /* capable         */ true,
-            /* required        */ false},
-        /* rm_enabled      */ {},
-        /* btm_enabled     */ {},
-//      /* mbo_enabled     */ {}, // For IDF 4.4 and higher
-        /* reserved        */ {}
-    }};
-    // wifi_config_t sta_config;
-    // sta_config.sta.ssid = (uint8_t[64])"HUAWEI-B315-5592";
-    // sta_config.sta.password = (uint8_t[64])"Y0A5LFB6B5D";
-    // sta_config.sta.bssid_set = 0;
+
+    wifi_config_t sta_config;
+    memset(&sta_config, 0, sizeof(wifi_config_t));
+    sta_config.sta.ssid = (uint8_t[64])"HUAWEI-B315-5592";
+    sta_config.sta.password = (uint8_t[64])"Y0A5LFB6B5D";
+    sta_config.sta.bssid_set = 0;
     esp_wifi_set_config(WIFI_IF_STA, &sta_config);
+    
     esp_wifi_start();
-
-    printf("Hello world!\n");
-    gpio_set_direction(GPIO_NUM_2, GPIO_MODE_OUTPUT);
-
-    HD44780 lcd;
-    lcd.init();
 
     vTaskDelay(pdMS_TO_TICKS(5000));
     printf("Http clinent runs\n");
@@ -121,13 +90,7 @@ extern "C" void app_main(void) {
     }
     esp_http_client_cleanup(client);
 
-    
-    lcd.charXY(1, 1, '!');
-
     while (1) {
-        gpio_set_level(GPIO_NUM_2, 1);
-        vTaskDelay(pdMS_TO_TICKS(1000));
-        gpio_set_level(GPIO_NUM_2, 0);
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }

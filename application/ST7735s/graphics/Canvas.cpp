@@ -2,6 +2,17 @@
 #include "ST7735s.h"
 #include "math.h"
 
+void Canvas::drawBitmap(const uint8_t bitmap[], uint8_t width, uint8_t height) {
+	display->setAddrWindow(0, 0, width-1, height-1);
+	display->sendCommand(RamWrite);
+	for (uint8_t row = 0; row < height; row++) {
+		for (uint16_t col = 0; col < width*2; col+=2) {
+			uint32_t i = row * width * 2 + col;
+			display->sendData16Bit((uint16_t)bitmap[i] * 256 + bitmap[i+1]);
+		}
+	}
+}
+
 void Canvas::fillEllipse(int xCenter,int yCenter, int width, int height, Color color) {
 	int xRadius = width/2, yRadius = height/2;
 	int xRight, xLeft = xRadius, y = 1, dx = 0;
